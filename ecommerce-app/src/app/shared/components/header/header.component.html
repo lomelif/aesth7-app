@@ -1,0 +1,106 @@
+<header class="sticky top-0 z-50 bg-white border-b">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <a routerLink="/" class="text-2xl font-bold">SKY<span class="text-primary">STYLE</span></a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a routerLink="/" class="cursor-pointer text-sm font-medium hover:text-primary transition-colors">
+            HOME
+          </a>
+          <div class="relative group">
+            <button class="flex items-center text-sm font-medium hover:text-primary transition-colors">
+              SHOP BY
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </button>
+            <div class="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md hidden group-hover:block">
+              <div class="p-2 space-y-1">
+                <a routerLink="/" class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-100 rounded-md">T-Shirts</a>
+                <a routerLink="/" class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-100 rounded-md">Hoodies</a>
+                <a routerLink="/" class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-100 rounded-md">Long-sleeve's</a>
+                <a routerLink="/" class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-100 rounded-md">Baby tee's</a>
+              </div>
+            </div>
+          </div>
+          <a routerLink="/" class="cursor-pointer text-sm font-medium hover:text-primary transition-colors">
+            BEST SELLERS
+          </a>
+          <a routerLink="/" class="cursor-pointer text-sm font-medium hover:text-primary transition-colors">
+            NEW ARRIVALS
+          </a>
+        </nav>
+        
+        <!-- Icons -->
+        <div class="flex items-center space-x-4">
+          <button class="hidden sm:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            </svg>
+          </button>
+          <button class="hidden sm:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </button>
+          <button class="hidden sm:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            </svg>
+          </button>
+          <button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 relative">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <span class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              3
+            </span>
+          </button>
+          <button 
+            class="md:hidden flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100"
+            (click)="toggleMenu()"
+          >
+            <svg *ngIf="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+              <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+            </svg>
+            <svg *ngIf="isMenuOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+              <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div *ngIf="isMenuOpen" class="md:hidden bg-white border-t">
+      <div class="container mx-auto px-4 py-2">
+        <nav class="flex flex-col space-y-3 py-4">
+          <a routerLink="/" class="cursor-pointer text-sm font-medium py-2">
+            HOME
+          </a>
+          <details class="group">
+            <summary class="flex cursor-pointer items-center justify-between py-2 text-sm font-medium">
+              SHOP BY
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </summary>
+            <div class="pl-4 pt-2 space-y-2">
+              <a routerLink="/" class="cursor-pointer block py-2 text-sm">T-Shirts</a>
+              <a routerLink="/" class="cursor-pointer block py-2 text-sm">Hoodies</a>
+              <a routerLink="/" class="cursor-pointer block py-2 text-sm">Long-sleeve's</a>
+              <a routerLink="/" class="cursor-pointer block py-2 text-sm">Baby tee's</a>
+            </div>
+          </details>
+          <a routerLink="/" class="cursor-pointer text-sm font-medium py-2">
+            BEST SELLERS
+          </a>
+          <a routerLink="/" class="cursor-pointer text-sm font-medium py-2">
+            NEW ARRIVALS
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>

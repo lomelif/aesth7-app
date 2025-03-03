@@ -1,0 +1,25 @@
+<section class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Categorías Destacadas</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div *ngFor="let category of categories" class="group relative overflow-hidden rounded-lg">
+          <img 
+            [src]="'assets/images/placeholder-' + category.toLowerCase() + '.jpg'" 
+            [alt]="category" 
+            class="w-full h-[300px] object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+            <div class="p-6 w-full">
+              <h3 class="text-xl font-bold text-white mb-2">{{category}}</h3>
+              <a 
+                routerLink="/" 
+                class="inline-block text-white text-sm underline underline-offset-4 transition-all hover:underline-offset-8"
+              >
+                Ver Productos
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

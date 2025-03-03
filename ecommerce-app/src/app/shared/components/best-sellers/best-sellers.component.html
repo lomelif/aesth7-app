@@ -1,0 +1,42 @@
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center mb-12">
+        <h2 class="text-3xl font-bold">NUESTROS BESTSELLER'S.</h2>
+        <a 
+          routerLink="/" 
+          class="text-primary font-medium hover:underline underline-offset-4"
+        >
+          Ver Todos
+        </a>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div *ngFor="let product of featuredProducts; let i = index" class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          <div class="relative">
+            <img 
+              [src]="'assets/img/T-Shirt ' + (i + 1) + '.jpeg'" 
+              [alt]="product.name" 
+              class="w-full h-[300px] object-cover"
+            />
+            <span *ngIf="product.discount" class="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">
+              Oferta
+            </span>
+            <button class="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm hover:bg-gray-100 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="p-4">
+            <h3 class="font-medium mb-1">{{product.name}}</h3>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-lg">{{product.price}}</span>
+              <span *ngIf="product.discount" class="text-gray-500 line-through text-sm">{{product.discount}}</span>
+            </div>
+            <button class="w-full mt-4 bg-primary hover:bg-alternative text-white py-2 px-4 rounded-md transition-colors">
+              Añadir al Carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
