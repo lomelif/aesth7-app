@@ -1,0 +1,119 @@
+<app-header/>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Imágenes del producto -->
+      <div class="space-y-4">
+        <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+          <img [src]="selectedImage" alt="{{product.name}}" class="w-full h-full object-cover">
+        </div>
+        <div class="flex space-x-2">
+          <div *ngFor="let image of product.images" 
+               class="w-20 h-20 border rounded-md cursor-pointer"
+               [class.border-black]="image === selectedImage"
+               (click)="selectImage(image)">
+            <img [src]="image" alt="Thumbnail" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </div>
+  
+      <!-- Información del producto -->
+      <div class="space-y-6">
+        <h1 class="text-3xl font-bold italic">{{product.name}}</h1>
+        <p class="text-xl">$ {{product.price}}</p>
+  
+        <!-- Promociones -->
+        <div class="text-sm">
+          <p>Impuestos incluidos. El envío es gratuito.</p>
+        </div>
+  
+        <!-- Opciones de pago -->
+        <!-- <div class="space-y-2">
+          <div class="flex items-center">
+            <span>Hasta <span class="font-bold">15% de descuento</span> con</span>
+            <img src="/placeholder.svg?height=30&width=100" alt="kueskipay" class="h-6 ml-2">
+          </div>
+          <div>
+            <span>Sin pago inicial. Cupón: <span class="font-bold">KUESKINUEVO</span></span>
+            <a href="#" class="text-blue-500 ml-2">¡Conócenos!</a>
+          </div>
+        </div> -->
+  
+        <!-- Selector de color -->
+        <div class="space-y-2">
+          <p>Color: {{getSelectedColor()}}</p>
+          <div class="flex space-x-2">
+            <div *ngFor="let color of product.colors"
+                 class="w-16 h-16 border rounded-md flex items-center justify-center cursor-pointer"
+                 [class.border-black]="color.selected"
+                 (click)="selectColor(color)">
+              <span>{{color.name}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Selector de talla -->
+        <div class="space-y-2">
+          <p>Size: {{getSelectedSize()}}</p>
+          <div class="grid grid-cols-6 gap-2">
+            <div *ngFor="let size of product.sizes"
+                 class="border rounded-md py-2 flex items-center justify-center cursor-pointer"
+                 [class.border-black]="size.selected"
+                 (click)="selectSize(size)">
+              <span>{{size.name}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Selector de cantidad -->
+        <div class="border rounded-md flex items-center justify-between w-full">
+          <button (click)="decreaseQuantity()" class="px-4 py-2 text-xl">−</button>
+          <span>{{quantity}}</span>
+          <button (click)="increaseQuantity()" class="px-4 py-2 text-xl">+</button>
+        </div>
+  
+        <!-- Botones de acción -->
+        <div class="space-y-3">
+          <button (click)="addToCart()" class="w-full py-3 border border-black rounded-md uppercase font-medium">
+            Agregar al carrito
+          </button>
+          <button (click)="buyNow()" class="w-full py-3 bg-black text-white rounded-md uppercase font-medium">
+            Comprar ahora
+          </button>
+        </div>
+  
+        <!-- Descripción del producto -->
+        <div class="border-t pt-4">
+          <div class="flex justify-between items-center cursor-pointer" (click)="toggleDescription()">
+            <h3 class="font-medium">Descripción</h3>
+            <span class="text-2xl">{{isDescriptionOpen ? '−' : '+'}}</span>
+          </div>
+          <div *ngIf="isDescriptionOpen" class="mt-4 space-y-2">
+            <p>{{product.description}}</p>
+            <ul class="space-y-1">
+              <li *ngFor="let detail of product.details">• {{detail}}</li>
+            </ul>
+          </div>
+        </div>
+  
+        <!-- Tiempos de envío -->
+        <div class="border-t pt-4">
+          <div class="flex justify-between items-center cursor-pointer" (click)="toggleShipping()">
+            <h3 class="font-medium">Tiempos de Envío</h3>
+            <span class="text-2xl">{{isShippingOpen ? '−' : '+'}}</span>
+          </div>
+          <div *ngIf="isShippingOpen" class="mt-4">
+            <p>Envío estándar: 3-5 días hábiles</p>
+            <p>Envío express: 1-2 días hábiles (costo adicional)</p>
+          </div>
+        </div>
+  
+        <!-- Promoción especial -->
+        <div class="border-t pt-4">
+          <p class="font-bold italic text-lg">GASTA $3,999 O MAS Y AGREGA 1 MISTERY BOX AL CARRITO GRATIS.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

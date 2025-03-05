@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-best-sellers',
+  selector: 'app-new-arrivals',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './best-sellers.component.html'
+  templateUrl: './new-arrivals.component.html'
 })
-export class BestSellersComponent {
+export class NewArrivalsComponent {
 
   @Input()
-  public bestSellers: any;
+  public newArrivals: any;
 
 }
