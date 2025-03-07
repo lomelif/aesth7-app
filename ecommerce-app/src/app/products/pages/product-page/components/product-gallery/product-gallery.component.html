@@ -1,0 +1,13 @@
+<div class="space-y-4">
+    <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+      <img [src]="selectedImage" alt="Producto" class="w-full h-full object-cover">
+    </div>
+    <div class="flex space-x-2">
+      <div *ngFor="let image of images" 
+           class="w-20 h-20 border-2 rounded-md cursor-pointer"
+           [class.border-black]="image === selectedImage"
+           (click)="selectImage(image)">
+        <img [src]="image" alt="Thumbnail" class="w-full h-full object-cover">
+      </div>
+    </div>
+  </div>

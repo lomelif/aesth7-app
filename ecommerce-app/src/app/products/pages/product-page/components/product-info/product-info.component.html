@@ -1,0 +1,30 @@
+<!-- Descripción del producto -->
+<div class="border-t pt-4">
+    <div class="flex justify-between items-center cursor-pointer" (click)="toggleDescription()">
+      <h3 class="font-medium">Descripción</h3>
+      <span class="text-2xl">{{isDescriptionOpen ? '−' : '+'}}</span>
+    </div>
+    <div *ngIf="isDescriptionOpen" class="mt-4 space-y-2">
+      <p>{{description}}</p>
+      <ul class="space-y-1">
+        <li *ngFor="let detail of details">• {{detail}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tiempos de envío -->
+  <div class="border-t pt-4">
+    <div class="flex justify-between items-center cursor-pointer" (click)="toggleShipping()">
+      <h3 class="font-medium">Tiempos de Envío</h3>
+      <span class="text-2xl">{{isShippingOpen ? '−' : '+'}}</span>
+    </div>
+    <div *ngIf="isShippingOpen" class="mt-4">
+      <p>Envío estándar: 3-5 días hábiles</p>
+      <p>Envío express: 1-2 días hábiles (costo adicional)</p>
+    </div>
+  </div>
+
+  <!-- Promoción especial -->
+  <!-- <div class="border-t pt-4">
+    <p class="font-bold italic text-lg">GASTA $3,999 O MAS Y AGREGA 1 MISTERY BOX AL CARRITO GRATIS.</p>
+  </div> -->
