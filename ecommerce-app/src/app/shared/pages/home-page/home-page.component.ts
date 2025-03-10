@@ -12,11 +12,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ProductCategoriesComponent } from "../../components/product-categories/product-categories.component";
 import { ServiceFeaturesComponent } from "../../components/service-features/service-features.component";
 import { NewArrivalsComponent } from "../../components/new-arrivals/new-arrivals.component";
+import { CartComponent } from '../../components/cart/cart.component';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, HeaderComponent, HeroComponent, BestSellersComponent, FooterComponent, ProductCategoriesComponent, ServiceFeaturesComponent, NewArrivalsComponent],
+  imports: [CommonModule, RouterOutlet, RouterLink, HeaderComponent, HeroComponent, BestSellersComponent, FooterComponent, ProductCategoriesComponent, ServiceFeaturesComponent, NewArrivalsComponent, CartComponent],
   templateUrl: './home-page.component.html'
 })
 export class HomePageComponent implements OnInit{

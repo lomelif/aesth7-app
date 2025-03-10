@@ -26,6 +26,7 @@ export class ProductPageComponent implements OnInit {
       id: "1",
       name: "DreaM+",
       price: 899.00,
+      color: "black",
       description: "As always, this is not for normal people, this is for ICONS.",
       sizes: [
         { name: "XS", available: true, selected: true },
@@ -37,10 +38,8 @@ export class ProductPageComponent implements OnInit {
       ],
       images: ["assets/img/T-Shirt 1.jpeg", "assets/img/T-Shirt 2.jpeg"],
       details: ["250 gsm 100% premium cotton.", "High-quality digital print.", "Drop shoulders, oversize fit."],
-      promotions: [
-        'AGREGA 3 AL CARRITO Y SOLO PAGA 2 USANDO EL CÓDIGO "COMBO".',
-        "GASTA $3,999 O MAS Y AGREGA 1 MISTERY BOX AL CARRITO GRATIS.",
-      ],
+      release: new Date(),
+      availability: true 
     }
     this.selectedImage = this.product.images[0]
   }

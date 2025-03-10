@@ -1,0 +1,90 @@
+<div *ngIf="isOpen" class="fixed inset-0 bg-black bg-opacity-50 z-40" (click)="closeCart()"></div>
+
+<div *ngIf="isOpen" 
+     [@slideInOut]
+     class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-50 flex flex-col shadow-lg">
+  
+  <!-- Header -->
+  <div class="flex justify-between items-center p-4 border-b">
+    <h2 class="text-xl font-medium">Carrito</h2>
+    <button (click)="closeCart()" class="p-2 text-gray-500 hover:text-gray-700">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  
+  <!-- Cart Items -->
+  <div class="flex-1 overflow-y-auto p-4">
+    <div *ngFor="let item of cartItems" class="mb-8 pb-8 border-b">
+      <div class="flex gap-4">
+        <!-- Product Image -->
+        <div class="w-1/3">
+          <img [src]="item.imageUrl" alt="{{ item.name }}" class="w-full object-cover">
+        </div>
+        
+        <!-- Product Details -->
+        <div class="w-2/3">
+          <h3 class="text-lg font-medium">{{ item.name }}</h3>
+          <p class="text-gray-600 mb-2">{{ item.variant }}</p>
+          <p class="font-medium mb-4">$ {{ item.price.toFixed(2) }}</p>
+          
+          <!-- Quantity Selector -->
+          <div class="flex border border-gray-300 mb-4">
+            <button 
+              (click)="updateQuantity(item, -1)" 
+              class="px-4 py-2 flex-1 flex justify-center items-center hover:bg-gray-100">
+              <span class="text-xl">−</span>
+            </button>
+            <div class="px-4 py-2 flex-1 flex justify-center items-center border-l border-r border-gray-300">
+              {{ item.quantity }}
+            </div>
+            <button 
+              (click)="updateQuantity(item, 1)" 
+              class="px-4 py-2 flex-1 flex justify-center items-center hover:bg-gray-100">
+              <span class="text-xl">+</span>
+            </button>
+          </div>
+          
+          <!-- Remove Button -->
+          <button 
+            (click)="removeItem(item.id)" 
+            class="text-black uppercase text-sm font-medium border-b border-black pb-1">
+            REMOVER
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Order Note -->
+    <!-- <div class="mb-6">
+      <button class="text-black uppercase text-sm font-medium border-b border-black pb-1">
+        Añadir nota de pedido 
+      </button>
+    </div> -->
+  </div>
+  
+  <!-- Cart Footer -->
+  <div class="p-4 border-t">
+    <div class="mb-4">
+      <div class="flex justify-between mb-2">
+        <span class="font-medium">Total:</span>
+        <span class="font-medium">$ {{ total.toFixed(2) }} MXN</span>
+      </div>
+      <p class="text-sm text-gray-600">
+        Impuestos y gastos de <span class="border-b border-black">envío</span> calculados al finalizar la compra
+      </p>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="space-y-3">
+      <button class="w-full py-3 border border-black text-black font-medium uppercase">
+        VER CARRITO
+      </button>
+      <button class="w-full py-3 bg-primary text-white font-medium uppercase">
+        IR AL CHECKOUT
+      </button>
+    </div>
+  </div>
+</div>
+
