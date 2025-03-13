@@ -16,7 +16,7 @@
                 <path d="m6 9 6 6 6-6"/>
               </svg>
             </button>
-            <div class="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md hidden group-hover:block">
+            <div class="absolute left-0 w-48 bg-white shadow-lg rounded-md hidden group-hover:block">
               <div class="p-2 space-y-1">
                 <a routerLink="/" class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-100 rounded-md">T-Shirts</a>
                 <a routerLink="/" class="cursor-pointer block px-4 py-2 text-sm hover:bg-gray-100 rounded-md">Hoodies</a>
@@ -35,7 +35,7 @@
         
         <!-- Icons -->
         <div class="flex items-center space-x-4">
-          <button class="hidden sm:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100">
+          <button (click)="openSearchProgrammatically()"  class="hidden sm:flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
             </svg>
@@ -49,8 +49,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
-            <span class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              3
+            <span *ngIf="(cartLength$ | async)! >= 1" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              {{cartLength$ | async}}
             </span>
           </button>
           <button 
@@ -99,5 +99,8 @@
       </div>
     </div>
   </header>
+
+  <app-search-bar placeholder="Búsqueda" 
+  (search)="handleSearch($event)"></app-search-bar>
 
   <app-cart [isOpen]="isCartOpen" (close)="closeCart()"></app-cart>

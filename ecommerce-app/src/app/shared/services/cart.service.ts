@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core"
-import { BehaviorSubject } from "rxjs"
+import { BehaviorSubject, map, Observable } from "rxjs"
 
 export interface CartItem {
   id: number
@@ -35,6 +35,10 @@ export class CartService {
 
   getCartItems(): CartItem[] {
     return this.cartItemsSubject.value
+  }
+
+  getCartLength$(): Observable<number> {
+    return this.cartItems$.pipe(map(items => items.length));
   }
 
   addToCart(item: CartItem): void {
