@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { ShowProduct } from '../../interfaces/products.interface';
 
 @Component({
   selector: 'app-new-arrivals',
@@ -10,6 +11,6 @@ import { Component, Input } from '@angular/core';
 export class NewArrivalsComponent {
 
   @Input()
-  public newArrivals: any;
+  public newArrivals: ShowProduct[] = [];
 
 }

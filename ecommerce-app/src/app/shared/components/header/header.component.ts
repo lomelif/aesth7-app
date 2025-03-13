@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartComponent } from '../cart/cart.component';
 import { CartService } from '../../services/cart.service';
 import { Observable } from 'rxjs';
@@ -18,7 +18,7 @@ export class HeaderComponent {
   cartLength$!: Observable<number>;
   searchResults: string[] = []
 
-  constructor(private cdr: ChangeDetectorRef, private cartService: CartService, private searchBarService: SearchBarService) {}
+  constructor(private cdr: ChangeDetectorRef, private cartService: CartService, private searchBarService: SearchBarService, private router: Router) {}
 
   ngOnInit() {
     this.cartLength$ = this.cartService.getCartLength$();
@@ -54,5 +54,11 @@ export class HeaderComponent {
 
   openSearchProgrammatically(): void {
     this.searchBarService.openSearchBar()
+  }
+
+  goToLogin() {
+    this.router.navigateByUrl('/login', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/login']);
+    });
   }
 }

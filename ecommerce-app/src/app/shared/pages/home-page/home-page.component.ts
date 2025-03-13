@@ -13,6 +13,8 @@ import { ProductCategoriesComponent } from "../../components/product-categories/
 import { ServiceFeaturesComponent } from "../../components/service-features/service-features.component";
 import { NewArrivalsComponent } from "../../components/new-arrivals/new-arrivals.component";
 import { CartComponent } from '../../components/cart/cart.component';
+import { ShowProduct } from '../../interfaces/products.interface';
+import { Features, ProductCategories } from '../../interfaces/info.interface';
 
 @Component({
   selector: 'app-home-page',
@@ -22,10 +24,10 @@ import { CartComponent } from '../../components/cart/cart.component';
 })
 export class HomePageComponent implements OnInit{
 
-  bestSellers: any[] = [];
-  newArrivals: any[] = [];
-  productCategories: any[] = [];
-  features: any[] = [];
+  bestSellers: ShowProduct[] = [];
+  newArrivals: ShowProduct[] = [];
+  productCategories: ProductCategories[] = [];
+  features: Features[] = [];
 
   constructor(private productsService: ProductsService, private infoService: InfoService){}
 
