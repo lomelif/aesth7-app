@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Features } from '../../interfaces/info.interface';
 
 @Component({
   selector: 'app-service-features',
@@ -11,7 +12,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class ServiceFeaturesComponent {
 
   @Input()
-  public features: any;
+  public features: Features[] = [];
   
   constructor(private sanitizer: DomSanitizer){}
 

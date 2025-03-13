@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ProductCategories } from '../../interfaces/info.interface';
 
 @Component({
   selector: 'app-product-categories',
@@ -11,5 +12,5 @@ import { RouterLink } from '@angular/router';
 export class ProductCategoriesComponent {
   
   @Input()
-  public productCategories: any;
+  public productCategories: ProductCategories[] = [];
 }
