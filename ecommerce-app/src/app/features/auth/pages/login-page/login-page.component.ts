@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, type FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms"
-import { HeaderComponent } from "../../../shared/components/header/header.component";
 import { RouterModule } from '@angular/router';
-import { FooterComponent } from "../../../shared/components/footer/footer.component";
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
 
 
 @Component({

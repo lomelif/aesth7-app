@@ -2,7 +2,8 @@ import { Component, Input, Output, EventEmitter, type OnInit } from "@angular/co
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
 import { trigger, transition, style, animate } from "@angular/animations"
-import { CartItem, CartService } from "../../services/cart.service"
+import { CartItem } from "../../../models/cart.interface"
+import { CartService } from "../../../services/cart.service"
 
 @Component({
   selector: "app-cart",

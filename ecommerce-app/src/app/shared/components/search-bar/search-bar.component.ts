@@ -11,8 +11,8 @@ import {
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
 import { Subscription } from "rxjs"
-import { SearchBarService } from "../../services/search-bar.service"
 import { animate, style, transition, trigger } from "@angular/animations"
+import { SearchBarService } from "../../../services/search-bar.service"
 
 
 @Component({

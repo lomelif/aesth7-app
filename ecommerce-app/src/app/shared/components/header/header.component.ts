@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CartComponent } from '../cart/cart.component';
-import { CartService } from '../../services/cart.service';
 import { Observable } from 'rxjs';
-import { SearchBarService } from '../../services/search-bar.service';
 import { SearchBarComponent } from "../search-bar/search-bar.component";
+import { CartService } from '../../../services/cart.service';
+import { SearchBarService } from '../../../services/search-bar.service';
 
 @Component({
   selector: 'app-header',

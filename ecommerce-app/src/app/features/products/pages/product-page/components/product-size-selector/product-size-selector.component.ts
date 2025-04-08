@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product, Size } from '../../../../interfaces/product.interface';
+import { Size } from '../../../../../../models/product.interface';
 
 @Component({
   selector: 'product-size-selector',

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ProductCategories } from '../../interfaces/info.interface';
+import { ProductCategories } from '../../../models/info.interface';
 
 @Component({
   selector: 'app-product-categories',
