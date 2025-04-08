@@ -1,4 +1,4 @@
 export const environment = {
     mainUrl: 'https://aesth7.com',
-    apiUrl: 'https://localhost:8080'
+    apiUrl: 'http://localhost:8080'
 };
