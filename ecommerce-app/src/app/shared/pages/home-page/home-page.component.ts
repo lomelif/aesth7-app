@@ -25,23 +25,56 @@ export class HomePageComponent implements OnInit{
 
   bestSellers: ShowProduct[] = [];
   newArrivals: ShowProduct[] = [];
+  products: any = [];
   productCategories: ProductCategories[] = [];
   features: Features[] = [];
+  loading: boolean = true;
 
   constructor(private productsService: ProductsService, private infoService: InfoService){}
 
   ngOnInit(): void {
-    this.productsService.getBestSellers().subscribe((data) => {
-      this.bestSellers = data;
+    this.productsService.getBestSellers().subscribe({
+      next: (products) => {
+        this.bestSellers = products.map(product => ({
+          name: product.name,
+          price: product.price,
+          images: product.images,
+          discount: product.discount
+        }));
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+      }
     })
-    this.productsService.getNewArrivals().subscribe((data) => {
-      this.newArrivals = data;
+    this.productsService.getNewArrivals().subscribe({
+      next: (products) => {
+        this.newArrivals = products.map(product => ({
+          name: product.name,
+          price: product.price,
+          images: product.images,
+          discount: product.discount
+        }));
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+      }
     })
     this.infoService.getProductCategories().subscribe((data) => {
       this.productCategories = data;
     })
     this.infoService.getFeatures().subscribe((data) => {
       this.features = data;
+    })
+    this.productsService.getAllProducts().subscribe({
+      next: (products) => {
+        this.products = products;
+        console.log(this.products);
+      },
+      error: (err) => {
+        console.log(err);
+      }
     })
   }
 

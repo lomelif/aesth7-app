@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { ShowProduct } from '../models/products.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,32 +11,17 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  bestSellers = [
-    { name: "T-Shirt Dream+", price: "499 MXN", discount: "799 MXN" },
-    { name: "T-Shirt Utopia", price: "459 MXN" },
-    { name: "T-Shirt Still Alone", price: "659 MXN", discount: "899 MXN" },
-    { name: "T-Shirt Moonlight", price: "799 MXN" },
-  ];
-
-  newArrivals = [
-    { name: "T-Shirt Dream+", price: "499 MXN", discount: "799 MXN" },
-    { name: "T-Shirt Utopia", price: "459 MXN" },
-    { name: "T-Shirt Still Alone", price: "659 MXN", discount: "899 MXN" },
-    { name: "T-Shirt Moonlight", price: "799 MXN" },
-  ];
+  latestProductsUrl = `${environment.apiUrl}/products/latest`;
 
   getBestSellers(): Observable<any[]> {
-    return of(this.bestSellers);
+    return this.http.get<ShowProduct[]>(`${environment.apiUrl}/products/home/trending`);
   }
 
   getNewArrivals(): Observable<any[]> {
-    return of(this.newArrivals);
-  }  
+    return this.http.get<ShowProduct[]>(`${environment.apiUrl}/products/home/latest`);
+  }
 
-  // Método para obtener productos desde la API
-  // obtenerProductos(): Observable<any> {
-  //   return this.http.get<any>(this.apiUrl);
-  // }
-
-
+  getAllProducts(): Observable<any[]> {
+    return this.http.get<ShowProduct[]>(`${environment.apiUrl}/products`);
+  }
 }
