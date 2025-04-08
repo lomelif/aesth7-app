@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Features, ProductCategories } from '../interfaces/info.interface';
+import { Features, ProductCategories } from '../models/info.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +14,19 @@ export class InfoService {
       {
         id: "tshirts",
         name: "T-SHIRTS",
-        image: "/assets/img/tshirt-category.jpeg",
+        image: "https://res.cloudinary.com/duhwn48mc/image/upload/v1743797906/Shirt7C_uzzgrf.jpg",
         link: "/products/tshirts",
       },
       {
         id: "hoodies",
         name: "HOODIES",
-        image: "/assets/img/hoodie-category.jpeg",
+        image: "https://res.cloudinary.com/duhwn48mc/image/upload/v1744068760/CategoryHoodie_xea2qg.jpg",
         link: "/products/hoodies",
       },
       {
         id: "new",
         name: "NEW PRODUCTS",
-        image: "/assets/img/new-products-category.jpeg",
+        image: "https://res.cloudinary.com/duhwn48mc/image/upload/v1744067465/Long1A_xpmz37.jpg",
         link: "/products/new",
       },
     ];

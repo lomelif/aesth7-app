@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { FormBuilder, type FormGroup, Validators, ReactiveFormsModule, FormsModule } from "@angular/forms"
 import { CommonModule } from "@angular/common"
-import { HeaderComponent } from "../../../shared/components/header/header.component";
 import { RouterModule } from '@angular/router';
-import { FooterComponent } from "../../../shared/components/footer/footer.component";
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-register-page',

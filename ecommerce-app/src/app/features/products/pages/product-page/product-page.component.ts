@@ -2,17 +2,16 @@ import { ProductActionsComponent } from './components/product-actions/product-ac
 import { Component, CUSTOM_ELEMENTS_SCHEMA, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { FormsModule } from "@angular/forms"
-import type { Product, Size } from "../../interfaces/product.interface"
-import { HeaderComponent } from "../../../shared/components/header/header.component";
 import { ProductGalleryComponent } from "./components/product-gallery/product-gallery.component";
 import { ProductInfoComponent } from "./components/product-info/product-info.component";
 import { ProductQuantitySelectorComponent } from "./components/product-quantity-selector/product-quantity-selector.component";
 import { ProductSizeSelectorComponent } from "./components/product-size-selector/product-size-selector.component";
+import { Product, Size } from '../../../../models/product.interface';
 
 @Component({
   selector: "app-product-page",
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, ProductGalleryComponent, ProductInfoComponent, ProductSizeSelectorComponent, ProductQuantitySelectorComponent, ProductActionsComponent],
+  imports: [CommonModule, FormsModule, ProductGalleryComponent, ProductInfoComponent, ProductSizeSelectorComponent, ProductQuantitySelectorComponent, ProductActionsComponent],
   templateUrl: "./product-page.component.html",
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -25,6 +24,7 @@ export class ProductPageComponent implements OnInit {
     this.product = {
       id: "1",
       name: "DreaM+",
+      type: "T-Shirt",
       price: 899.00,
       color: "black",
       description: "As always, this is not for normal people, this is for ICONS.",

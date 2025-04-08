@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ShowProduct } from '../../interfaces/products.interface';
+import { ShowProduct } from '../../../models/products.interface';
 
 @Component({
   selector: 'app-best-sellers',

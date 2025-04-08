@@ -1,5 +1,3 @@
-import { InfoService } from './../../services/info.service';
-import { ProductsService } from './../../services/products.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
@@ -7,14 +5,15 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { HeroComponent } from '../../components/hero/hero.component';
 import { BestSellersComponent } from '../../components/best-sellers/best-sellers.component';
-import { BannerComponent } from "../../components/banner/banner.component";
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ProductCategoriesComponent } from "../../components/product-categories/product-categories.component";
 import { ServiceFeaturesComponent } from "../../components/service-features/service-features.component";
 import { NewArrivalsComponent } from "../../components/new-arrivals/new-arrivals.component";
 import { CartComponent } from '../../components/cart/cart.component';
-import { ShowProduct } from '../../interfaces/products.interface';
-import { Features, ProductCategories } from '../../interfaces/info.interface';
+import { ShowProduct } from '../../../models/products.interface';
+import { Features, ProductCategories } from '../../../models/info.interface';
+import { ProductsService } from '../../../services/products.service';
+import { InfoService } from '../../../services/info.service';
 
 @Component({
   selector: 'app-home-page',
