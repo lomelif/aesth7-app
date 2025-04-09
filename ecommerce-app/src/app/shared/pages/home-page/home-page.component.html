@@ -1,46 +1,7 @@
 <div class="flex min-h-screen flex-col">
-  <!-- Header -->
-  <app-header 
-    (search)="handleSearch($event)"
-    (liveSearch)="handleLiveSearch($event)"
-    (closeSearch)="clearSearch()">
-    
-    <!-- Search Results -->
-    <div searchResults *ngIf="showSearchResults" class="w-full">
-      <h2 class="text-2xl font-bold mb-6">Resultados para "{{searchQuery}}"</h2>
-      
-      <div *ngIf="searchResults.length > 0; else noResults">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <div *ngFor="let product of searchResults" class="group relative">
-            <div class="aspect-square overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75">
-              <img 
-                [src]="product.images[0]" 
-                [alt]="product.name"
-                class="h-full w-full object-cover object-center"
-              />
-            </div>
-            <div class="mt-4 flex justify-center">
-              <div class="mr-6">
-                <h3 class="text-sm text-gray-700">
-                  <a [routerLink]="['/product', product.id]">
-                    <span aria-hidden="true" class="absolute inset-0"></span>
-                    {{ product.name }}
-                  </a>
-                </h3>
-              </div>
-              <p class="text-sm font-medium text-gray-900">${{ product.price }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <ng-template #noResults>
-        <p class="text-gray-500">No se encontraron resultados para "{{searchQuery}}"</p>
-      </ng-template>
-    </div>
-  </app-header>
   
-  <!-- Contenido principal -->
+  <app-header></app-header>
+  
   <main class="flex-1">
     <app-hero/>
     <app-best-sellers [bestSellers]="bestSellers" [loading]="loading"/>

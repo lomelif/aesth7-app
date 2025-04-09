@@ -1,3 +1,4 @@
+// home-page.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
@@ -12,7 +13,6 @@ import { ShowProduct } from '../../../models/products.interface';
 import { Features, ProductCategories } from '../../../models/info.interface';
 import { ProductsService } from '../../../services/products.service';
 import { InfoService } from '../../../services/info.service';
-import { SearchResultsComponent } from '../../components/search-results/search-results.component';
 
 @Component({
   selector: 'app-home-page',
@@ -33,13 +33,9 @@ import { SearchResultsComponent } from '../../components/search-results/search-r
 export class HomePageComponent implements OnInit {
   bestSellers: ShowProduct[] = [];
   newArrivals: ShowProduct[] = [];
-  products: any = [];
   productCategories: ProductCategories[] = [];
   features: Features[] = [];
   loading: boolean = true;
-  showSearchResults = false;
-  searchQuery = '';
-  searchResults: any[] = [];
 
   constructor(
     private productsService: ProductsService, 
@@ -72,15 +68,6 @@ export class HomePageComponent implements OnInit {
         this.loading = false;
       }
     });
-
-    this.productsService.getAllProducts().subscribe({
-      next: (products) => {
-        this.products = products;
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
   }
 
   private loadCategories(): void {
@@ -93,27 +80,5 @@ export class HomePageComponent implements OnInit {
     this.infoService.getFeatures().subscribe((data) => {
       this.features = data;
     });
-  }
-
-  handleLiveSearch(query: string): void {
-    this.searchQuery = query;
-    this.showSearchResults = query.length > 0;
-    
-    if (this.showSearchResults) {
-      this.searchResults = this.products.filter((product: any) => 
-        product.name.toLowerCase().includes(query.toLowerCase()) ||
-        (product.description && product.description.toLowerCase().includes(query.toLowerCase()))
-      );
-    }
-  }
-
-  handleSearch(query: string): void {
-    this.handleLiveSearch(query);
-  }
-
-  clearSearch(): void {
-    this.showSearchResults = false;
-    this.searchQuery = '';
-    this.searchResults = [];
   }
 }

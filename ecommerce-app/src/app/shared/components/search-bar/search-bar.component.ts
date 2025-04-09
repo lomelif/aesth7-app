@@ -1,14 +1,4 @@
-import { 
-  Component, 
-  ElementRef, 
-  EventEmitter, 
-  Input, 
-  OnDestroy, 
-  OnInit, 
-  Output, 
-  ViewChild, 
-  Renderer2 
-} from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, Renderer2 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { Subscription } from "rxjs";
