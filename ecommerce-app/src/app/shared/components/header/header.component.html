@@ -98,19 +98,19 @@
   </div>
 </header>
 
-<!-- Search bar -->
+<!-- Search Bar -->
 <app-search-bar 
-placeholder="Buscar productos..."
-(search)="handleSearch($event)"
-(liveSearch)="handleLiveSearch($event)"
-(close)="handleCloseSearch()">
+  placeholder="Busqueda"
+  (search)="handleSearch($event)"
+  (liveSearch)="handleLiveSearch($event)"
+  (close)="handleCloseSearch()">
 </app-search-bar>
 
-<!-- Search -->
-<div *ngIf="showSearchResults" class="fixed inset-0 z-40 mt-16 bg-white/85 backdrop-blur-sm overflow-y-auto">
-  <div class="container mx-auto px-4 py-6">
-    <ng-content select="[searchResults]"></ng-content>
-  </div>
-</div>
+<!-- Search Results -->
+<app-search-results 
+  [searchResults]="searchResults"
+  [searchQuery]="searchQuery"
+  [showSearchResults]="showSearchResults">
+</app-search-results>
 
 <app-cart [isOpen]="isCartOpen" (close)="closeCart()"></app-cart>

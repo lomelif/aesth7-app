@@ -1,4 +1,3 @@
-// header.component.ts
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
@@ -8,38 +7,56 @@ import { SearchBarComponent } from "../search-bar/search-bar.component";
 import { CartService } from '../../../services/cart.service';
 import { SearchBarService } from '../../../services/search-bar.service';
 import { Subject } from 'rxjs';
+import { ShowProduct } from '../../../models/products.interface';
+import { ProductsService } from '../../../services/products.service';
+import { SearchResultsComponent } from "../search-results/search-results.component";
+import { Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, CartComponent, SearchBarComponent],
+  imports: [CommonModule, RouterLink, CartComponent, SearchBarComponent, SearchResultsComponent],
   templateUrl: './header.component.html'
 })
+
 export class HeaderComponent implements OnInit {
   isMenuOpen = false;
   cartLength$!: Observable<number>;
   isCartOpen = false;
   showSearchResults = false;
+  searchQuery = '';
+  searchResults: ShowProduct[] = [];
+  products: ShowProduct[] = [];
   private destroy$ = new Subject<void>();
-
-  @Output() search = new EventEmitter<string>();
-  @Output() liveSearch = new EventEmitter<string>();
-  @Output() closeSearch = new EventEmitter<void>();
 
   constructor(
     private cdr: ChangeDetectorRef, 
     private cartService: CartService, 
     private searchBarService: SearchBarService, 
-    private router: Router
+    private router: Router,
+    private productsService: ProductsService,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit() {
     this.cartLength$ = this.cartService.getCartLength$();
+    this.loadAllProducts();
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private loadAllProducts(): void {
+    this.productsService.getAllProducts().subscribe({
+      next: (products) => {
+        this.products = products;
+      },
+      error: (err) => {
+        console.error('Error loading products:', err);
+      }
+    });
   }
 
   toggleMenu() {
@@ -57,19 +74,35 @@ export class HeaderComponent implements OnInit {
 
   handleSearch(query: string): void {
     if (query.trim()) {
+      this.searchQuery = query;
       this.showSearchResults = true;
-      this.search.emit(query);
+      this.searchResults = this.filterProducts(query);
+      this.renderer.addClass(document.body, 'overflow-hidden');
     }
   }
 
   handleLiveSearch(query: string): void {
+    this.searchQuery = query;
     this.showSearchResults = query.length > 0;
-    this.liveSearch.emit(query);
+    if (this.showSearchResults) {
+      this.searchResults = this.filterProducts(query);
+      this.renderer.addClass(document.body, 'overflow-hidden');
+    } else {
+      this.renderer.removeClass(document.body, 'overflow-hidden');
+    }
   }
 
   handleCloseSearch(): void {
     this.showSearchResults = false;
-    this.closeSearch.emit();
+    this.searchQuery = '';
+    this.searchResults = [];
+    this.renderer.removeClass(document.body, 'overflow-hidden');
+  }
+  
+  private filterProducts(query: string): ShowProduct[] {
+    return this.products.filter(product => 
+      product.name.toLowerCase().includes(query.toLowerCase())
+    );
   }
 
   openSearchProgrammatically(): void {
