@@ -1,11 +1,13 @@
+// header.component.ts
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CartComponent } from '../cart/cart.component';
 import { Observable } from 'rxjs';
 import { SearchBarComponent } from "../search-bar/search-bar.component";
 import { CartService } from '../../../services/cart.service';
 import { SearchBarService } from '../../../services/search-bar.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -13,52 +15,68 @@ import { SearchBarService } from '../../../services/search-bar.service';
   imports: [CommonModule, RouterLink, CartComponent, SearchBarComponent],
   templateUrl: './header.component.html'
 })
-export class HeaderComponent {
-  isMenuOpen = false
+export class HeaderComponent implements OnInit {
+  isMenuOpen = false;
   cartLength$!: Observable<number>;
-  searchResults: string[] = []
+  isCartOpen = false;
+  showSearchResults = false;
+  private destroy$ = new Subject<void>();
 
-  constructor(private cdr: ChangeDetectorRef, private cartService: CartService, private searchBarService: SearchBarService, private router: Router) {}
+  @Output() search = new EventEmitter<string>();
+  @Output() liveSearch = new EventEmitter<string>();
+  @Output() closeSearch = new EventEmitter<void>();
+
+  constructor(
+    private cdr: ChangeDetectorRef, 
+    private cartService: CartService, 
+    private searchBarService: SearchBarService, 
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.cartLength$ = this.cartService.getCartLength$();
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  isCartOpen = false
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 
   toggleCart(): void {
-    this.isCartOpen = !this.isCartOpen
-    console.log("Cart toggled:", this.isCartOpen)
+    this.isCartOpen = !this.isCartOpen;
     this.cdr.detectChanges();
   }
 
   closeCart(): void {
-    this.isCartOpen = false
+    this.isCartOpen = false;
   }
 
   handleSearch(query: string): void {
-    if (!query.trim()) {
-      this.searchResults = []
-      return
+    if (query.trim()) {
+      this.showSearchResults = true;
+      this.search.emit(query);
     }
+  }
 
-    // Resultados demo para la API
-    this.searchResults = [`Result 1 for "${query}"`, `Result 2 for "${query}"`, `Result 3 for "${query}"`]
+  handleLiveSearch(query: string): void {
+    this.showSearchResults = query.length > 0;
+    this.liveSearch.emit(query);
+  }
 
-    console.log(this.searchResults)
+  handleCloseSearch(): void {
+    this.showSearchResults = false;
+    this.closeSearch.emit();
   }
 
   openSearchProgrammatically(): void {
-    this.searchBarService.openSearchBar()
+    this.searchBarService.openSearchBar();
   }
 
   goToLogin() {
-    this.router.navigateByUrl('/login', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/login']);
-    });
+    this.router.navigate(['/login']);
   }
 }
