@@ -1,4 +1,14 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
+import { 
+  Component, 
+  ElementRef, 
+  EventEmitter, 
+  Input, 
+  OnDestroy, 
+  OnInit, 
+  Output, 
+  ViewChild, 
+  Renderer2 
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { Subscription } from "rxjs";
@@ -25,16 +35,17 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   @Input() placeholder = "Search..."
   @Output() search = new EventEmitter<string>()
   @Output() liveSearch = new EventEmitter<string>()
-  @Output() close = new EventEmitter<void>();
   @ViewChild("searchInput") searchInput!: ElementRef<HTMLInputElement>
 
   isOpen = false
   query = ""
   private subscription: Subscription = new Subscription()
   private searchSubject = new Subject<string>()
-  
 
-  constructor(private searchBarService: SearchBarService) {}
+  constructor(
+    private searchBarService: SearchBarService,
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit(): void {
     this.subscription = this.searchBarService.openSearchBar$.subscribe(() => {
@@ -57,6 +68,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   openSearchBar(): void {
     this.isOpen = true
+    this.renderer.addClass(document.body, 'overflow-hidden');
     setTimeout(() => {
       this.searchInput?.nativeElement.focus()
     })
@@ -65,8 +77,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   closeSearchBar(): void {
     this.isOpen = false
     this.query = ''
+    this.renderer.removeClass(document.body, 'overflow-hidden');
     this.liveSearch.emit('')
-    this.close.emit();
   }
 
   handleSearch(): void {
@@ -86,5 +98,4 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       this.closeSearchBar()
     }
   }
-  
 }
