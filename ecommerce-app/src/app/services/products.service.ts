@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ShowProduct } from '../models/products.interface';
+import { CatalogProduct, PaginatedResponse } from '../models/product.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,14 @@ export class ProductsService {
 
   getAllProducts(): Observable<any[]> {
     return this.http.get<ShowProduct[]>(`${environment.apiUrl}/products`);
+  }
+
+  getCatalogProducts(page: number = 0, size: number = 8, sortBy: string): Observable<PaginatedResponse<CatalogProduct>> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('sortBy', sortBy);
+
+    return this.http.get<PaginatedResponse<CatalogProduct>>(`${environment.apiUrl}/products/catalog`, { params });
   }
 }
