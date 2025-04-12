@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CatalogComponent } from "../../components/catalog/catalog.component";
 import { HeaderComponent } from "../../../../shared/components/header/header.component";
+import { CatalogComponent } from "../../components/catalog/catalog.component";
 import { FooterComponent } from "../../../../shared/components/footer/footer.component";
 
 @Component({
-  selector: 'app-new-arrivals-page',
+  selector: 'app-catalog',
   standalone: true,
-  imports: [CatalogComponent, HeaderComponent, FooterComponent],
-  templateUrl: './new-arrivals-page.component.html',
+  imports: [HeaderComponent, CatalogComponent, FooterComponent],
+  templateUrl: './t-shirt-catalog-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewArrivalsPageComponent { }
+export class TShirtCatalogPageComponent { }
