@@ -15,19 +15,19 @@ export class InfoService {
         id: "tshirts",
         name: "T-SHIRTS",
         image: "https://res.cloudinary.com/duhwn48mc/image/upload/v1743797906/Shirt7C_uzzgrf.jpg",
-        link: "/products/tshirts",
+        link: "/t-shirts",
       },
       {
         id: "hoodies",
         name: "HOODIES",
         image: "https://res.cloudinary.com/duhwn48mc/image/upload/v1744068760/CategoryHoodie_xea2qg.jpg",
-        link: "/products/hoodies",
+        link: "/hoodies",
       },
       {
         id: "new",
         name: "NEW PRODUCTS",
         image: "https://res.cloudinary.com/duhwn48mc/image/upload/v1744067465/Long1A_xpmz37.jpg",
-        link: "/products/new",
+        link: "/new-arrivals",
       },
     ];
 

@@ -19,8 +19,9 @@ interface FilterOption {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CatalogComponent implements OnInit {
-  @Input() title = '';
-  @Input() sortBy = 'views';
+  @Input() title: string = '';
+  @Input() sortBy: string = 'views';
+  @Input() type: string = '';
 
   products: CatalogProduct[] = [];
   paginationInfo: any = {
@@ -32,7 +33,7 @@ export class CatalogComponent implements OnInit {
     pageSize: 8
   };
   loading = true;
-  activeFilters: { color?: string } = {};
+  activeFilters: { color?: string, type?: string } = {};
   selectedOptions: { [key: string]: string } = {};
   isFilterOpen = false;
   filterOptions: FilterOption[] = [
@@ -51,6 +52,9 @@ export class CatalogComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef, private productsService: ProductsService) {}
 
   ngOnInit(): void {
+    if (this.type) {
+      this.activeFilters.type = this.type;
+    }
     this.loadCatalogProducts();
   }
 

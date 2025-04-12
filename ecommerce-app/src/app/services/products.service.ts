@@ -30,7 +30,7 @@ export class ProductsService {
     page: number = 0,
     size: number = 8,
     sortBy: string,
-    filters?: { priceRange?: string; color?: string }
+    filters?: { priceRange?: string; color?: string, type?: string }
   ): Observable<PaginatedResponse<CatalogProduct>> {
     let params = new HttpParams()
       .set('page', page.toString())
@@ -43,6 +43,10 @@ export class ProductsService {
   
     if (filters?.color) {
       params = params.set('color', filters.color);
+    }
+
+    if (filters?.type) {
+      params = params.set('type', filters.type);
     }
   
     console.log('📤 Enviando filtros:', filters);
