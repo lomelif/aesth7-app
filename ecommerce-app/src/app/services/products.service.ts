@@ -26,12 +26,27 @@ export class ProductsService {
     return this.http.get<ShowProduct[]>(`${environment.apiUrl}/products`);
   }
 
-  getCatalogProducts(page: number = 0, size: number = 8, sortBy: string): Observable<PaginatedResponse<CatalogProduct>> {
+  getCatalogProducts(
+    page: number = 0,
+    size: number = 8,
+    sortBy: string,
+    filters?: { priceRange?: string; color?: string }
+  ): Observable<PaginatedResponse<CatalogProduct>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
       .set('sortBy', sortBy);
-
+  
+    if (filters?.priceRange) {
+      params = params.set('priceRange', filters.priceRange);
+    }
+  
+    if (filters?.color) {
+      params = params.set('color', filters.color);
+    }
+  
+    console.log('📤 Enviando filtros:', filters);
     return this.http.get<PaginatedResponse<CatalogProduct>>(`${environment.apiUrl}/products/catalog`, { params });
   }
+  
 }

@@ -2,26 +2,27 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CatalogProduct } from '../../../../models/product.interface';
 import { ProductsService } from '../../../../services/products.service';
+import { FormsModule } from '@angular/forms';
 
 interface FilterOption {
-  title: string
-  expanded: boolean
-  options?: string[]
+  title: string;
+  expanded: boolean;
+  options?: string[];
 }
 
 @Component({
   selector: 'product-catalog',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewArrivalsComponent implements OnInit {
+export class CatalogComponent implements OnInit {
   @Input() title = '';
-  @Input() sortBy = 'views'
+  @Input() sortBy = 'views';
 
-  products: CatalogProduct[] = []
+  products: CatalogProduct[] = [];
   paginationInfo: any = {
     totalPages: 0,
     totalElements: 0,
@@ -31,6 +32,8 @@ export class NewArrivalsComponent implements OnInit {
     pageSize: 8
   };
   loading = true;
+  activeFilters: { color?: string } = {};
+  selectedOptions: { [key: string]: string } = {};
   isFilterOpen = false;
   filterOptions: FilterOption[] = [
     {
@@ -39,14 +42,9 @@ export class NewArrivalsComponent implements OnInit {
       options: ["Más reciente", "Precio: menor a mayor", "Precio: mayor a menor", "Alfabético: A-Z", "Alfabético: Z-A"],
     },
     {
-      title: "Precio (MXN)",
-      expanded: false,
-      options: ["$0 - $500", "$500 - $1000", "$1000 - $1500", "$1500+"],
-    },
-    {
       title: "Color",
       expanded: false,
-      options: ["Negro", "Blanco"],
+      options: ["Black", "White"],
     },
   ];
 
@@ -60,7 +58,7 @@ export class NewArrivalsComponent implements OnInit {
     this.loading = true;
     this.cdr.markForCheck();
 
-    this.productsService.getCatalogProducts(page, this.paginationInfo.pageSize, this.sortBy).subscribe({
+    this.productsService.getCatalogProducts(page, this.paginationInfo.pageSize, this.sortBy, this.activeFilters).subscribe({
       next: (response) => {
         this.products = [...response.content];
         this.paginationInfo = {
@@ -74,7 +72,7 @@ export class NewArrivalsComponent implements OnInit {
         this.loading = false;
         this.cdr.markForCheck();
       },
-      error: (err) => {
+      error: () => {
         this.loading = false;
         this.cdr.markForCheck();
       }
@@ -102,7 +100,27 @@ export class NewArrivalsComponent implements OnInit {
   }
 
   applyFilters(): void {
+    const color = this.selectedOptions['Color'];
+    const order = this.selectedOptions['Ordenar'];
+
+    this.activeFilters = {
+      color: color
+    };
+
+    this.sortBy = this.getSortKey(order);
     this.toggleFilter();
     this.loadCatalogProducts(0);
+    this.cdr.markForCheck();
+  }
+
+  getSortKey(label: string): string {
+    switch (label) {
+      case 'Precio: menor a mayor': return 'price_asc';
+      case 'Precio: mayor a menor': return 'price_desc';
+      case 'Alfabético: A-Z': return 'name_asc';
+      case 'Alfabético: Z-A': return 'name_desc';
+      case 'Más reciente':
+      default: return 'views';
+    }
   }
 }
