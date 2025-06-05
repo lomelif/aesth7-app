@@ -21,7 +21,7 @@
 
   <!-- Products Grid -->
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div *ngFor="let product of products" class="border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-300">
+    <div *ngFor="let product of products" class="border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer" [routerLink]="['/product', product.id]">
       <div class="aspect-w-1 aspect-h-1 mb-4">
         <img [src]="product.images" [alt]="product.name" class="object-cover w-full h-full">
       </div>

@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } 
 import { CatalogProduct } from '../../../../models/product.interface';
 import { ProductsService } from '../../../../services/products.service';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 interface FilterOption {
   title: string;
@@ -13,7 +14,7 @@ interface FilterOption {
 @Component({
   selector: 'product-catalog',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

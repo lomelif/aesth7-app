@@ -7,20 +7,25 @@ import { ProductInfoComponent } from "./components/product-info/product-info.com
 import { ProductQuantitySelectorComponent } from "./components/product-quantity-selector/product-quantity-selector.component";
 import { ProductSizeSelectorComponent } from "./components/product-size-selector/product-size-selector.component";
 import { Product, Size } from '../../../../models/product.interface';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
+import { ActivatedRoute } from '@angular/router';
+import { ProductsService } from '../../../../services/products.service';
 
 @Component({
   selector: "app-product-page",
   standalone: true,
-  imports: [CommonModule, FormsModule, ProductGalleryComponent, ProductInfoComponent, ProductSizeSelectorComponent, ProductQuantitySelectorComponent, ProductActionsComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent,ProductGalleryComponent, ProductInfoComponent, ProductSizeSelectorComponent, ProductQuantitySelectorComponent, ProductActionsComponent],
   templateUrl: "./product-page.component.html",
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProductPageComponent implements OnInit {
   product: Product
+  productId!: string
   selectedImage: string
   quantity = 1
+  
 
-  constructor() {
+  constructor(private route: ActivatedRoute, private productsService: ProductsService) {
     this.product = {
       id: "1",
       name: "DreaM+",
@@ -44,7 +49,29 @@ export class ProductPageComponent implements OnInit {
     this.selectedImage = this.product.images[0]
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.productId = params.get('id')!;
+      this.productsService.getProductById(this.productId).subscribe({
+        next: (product) => {
+          const sizeNames = product.sizes as unknown as string[];
+
+          this.product = {
+            ...product,
+            sizes: sizeNames.map((sizeName: string, index: number) => ({
+              name: sizeName,
+              available: true,
+              selected: index === 0
+            }))
+          };
+
+          this.selectedImage = this.product.images[0];
+        },
+        error: (error) => console.error(error)
+      },
+      )
+    });
+  }
 
   selectImage(image: string): void {
     this.selectedImage = image

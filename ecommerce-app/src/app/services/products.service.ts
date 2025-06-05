@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ShowProduct } from '../models/products.interface';
-import { CatalogProduct, PaginatedResponse } from '../models/product.interface';
+import { CatalogProduct, PaginatedResponse, Product } from '../models/product.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +51,10 @@ export class ProductsService {
   
     console.log('📤 Enviando filtros:', filters);
     return this.http.get<PaginatedResponse<CatalogProduct>>(`${environment.apiUrl}/products/catalog`, { params });
+  }
+
+  getProductById(id:string): Observable<Product> {
+    return this.http.get<Product>(`${environment.apiUrl}/products/${id}`);
   }
   
 }

@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ShowProduct } from '../../../models/products.interface';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-new-arrivals',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './new-arrivals.component.html',
   styleUrl: './new-arrivals.component.css'
 })

@@ -11,7 +11,7 @@ import { BestSellersPageComponent } from './features/products/pages/best-sellers
 
 export const routes: Routes = [
     { path: '', component: HomePageComponent },
-    { path: 'product', component: ProductPageComponent },
+    { path: 'product/:id', component: ProductPageComponent },
     { path: 't-shirts', component: TShirtCatalogPageComponent },
     { path: 'hoodies', component: HoodieCatalogPageComponent },
     { path: 'long-sleeves', component: LongSleeveCatalogPageComponent },
