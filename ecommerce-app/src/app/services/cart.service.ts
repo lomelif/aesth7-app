@@ -4,7 +4,6 @@ import { BehaviorSubject, map, Observable } from "rxjs"
 export interface CartItem {
   id: number
   name: string
-  variant: string
   price: number
   quantity: number
   imageUrl: string
@@ -14,17 +13,7 @@ export interface CartItem {
   providedIn: "root",
 })
 export class CartService {
-  // Datos de ejemplo para el carrito
-  private initialItems: CartItem[] = [
-    {
-      id: 1,
-      name: "Boxy Tee Black",
-      variant: "Black 2.0 / M",
-      price: 699.0,
-      quantity: 1,
-      imageUrl: "assets/img/T-Shirt 1.jpeg",
-    },
-  ]
+  private initialItems: CartItem[] = []
 
   private cartItemsSubject = new BehaviorSubject<CartItem[]>(this.initialItems)
   cartItems$ = this.cartItemsSubject.asObservable()

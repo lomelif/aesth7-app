@@ -29,7 +29,6 @@ export class RegisterPageComponent implements OnInit{
   onSubmit(): void {
     if (this.registerForm.valid) {
       console.log("Formulario enviado:", this.registerForm.value)
-      // Aquí iría la lógica para enviar los datos al servidor
     } else {
       this.registerForm.markAllAsTouched()
     }
