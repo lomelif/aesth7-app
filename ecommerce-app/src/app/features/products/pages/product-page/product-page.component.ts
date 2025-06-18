@@ -10,6 +10,7 @@ import { Product, Size } from '../../../../models/product.interface';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../../services/products.service';
+import { CartService } from '../../../../services/cart.service';
 
 @Component({
   selector: "app-product-page",
@@ -23,9 +24,10 @@ export class ProductPageComponent implements OnInit {
   productId!: string
   selectedImage: string
   quantity = 1
+  isLoading = true;
   
 
-  constructor(private route: ActivatedRoute, private productsService: ProductsService) {
+  constructor(private route: ActivatedRoute, private productsService: ProductsService, private cartService: CartService) {
     this.product = {
       id: "1",
       name: "DreaM+",
@@ -51,6 +53,7 @@ export class ProductPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
+      this.isLoading = true;
       this.productId = params.get('id')!;
       this.productsService.getProductById(this.productId).subscribe({
         next: (product) => {
@@ -66,8 +69,11 @@ export class ProductPageComponent implements OnInit {
           };
 
           this.selectedImage = this.product.images[0];
+          this.isLoading = false;
         },
-        error: (error) => console.error(error)
+        error: (error) => {
+          this.isLoading = false;
+        }
       },
       )
     });
@@ -94,11 +100,17 @@ export class ProductPageComponent implements OnInit {
   
 
   addToCart(): void {
-    console.log("Producto agregado al carrito", {
-      product: this.product.name,
+    const selectedSize = this.product.sizes.find((s) => s.selected)?.name ?? 'N/A';
+
+    const item = {
+      id: Number(this.product.id),
+      name: this.product.name,
+      price: this.product.price,
       quantity: this.quantity,
-      size: this.product.sizes.find((s) => s.selected)?.name
-    })
+      imageUrl: this.product.images[0]
+    };
+
+    this.cartService.addToCart(item);
   }
 
   buyNow(): void {
