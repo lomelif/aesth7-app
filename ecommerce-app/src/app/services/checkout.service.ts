@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class CheckoutService {
-  private stripePromise = loadStripe('pk_test_51Rd073Iii0WCzbYpF0olsQgxzWOqEllEJgHkZR96Cs3p3V8ZLpCkZa6XOwiTfeIcxRjE2fmpERcgMMk3W9zAjaiD00uyW78e5o');
+  private stripePromise = loadStripe('pk_test_example');
 
   constructor(private http: HttpClient) {}
 
