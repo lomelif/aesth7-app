@@ -43,15 +43,15 @@ export interface Pageable {
   }
   
   export interface PaginatedResponse<T> {
-    content: T[];
+    items: T[];
     pageable: Pageable;
     totalPages: number;
-    totalElements: number;
+    totalItems: number;
     last: boolean;
     numberOfElements: number;
     first: boolean;
     size: number;
-    number: number;
+    page: number;
     sort: {
       sorted: boolean;
       unsorted: boolean;

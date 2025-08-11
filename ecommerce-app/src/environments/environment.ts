@@ -1,4 +1,4 @@
 export const environment = {
     mainUrl: 'https://aesth7.com',
-    apiUrl: 'http://localhost:8080'
+    apiUrl: 'https://aesth7-render.onrender.com'
 };

@@ -4,9 +4,10 @@ import { BehaviorSubject, map, Observable } from "rxjs"
 export interface CartItem {
   id: number
   name: string
+  size: string
   price: number
   quantity: number
-  imageUrl: string
+  image: string
 }
 
 @Injectable({
@@ -19,7 +20,6 @@ export class CartService {
   cartItems$ = this.cartItemsSubject.asObservable()
 
   constructor() {
-    console.log("CartService initialized with items:", this.initialItems)
   }
 
   getCartItems(): CartItem[] {

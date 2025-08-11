@@ -54,7 +54,6 @@ export class HeaderComponent implements OnInit {
         this.products = products;
       },
       error: (err) => {
-        console.error('Error loading products:', err);
       }
     });
   }
@@ -110,6 +109,19 @@ export class HeaderComponent implements OnInit {
   }
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    const token = localStorage.getItem('token');
+    if(this.isTokenExpired(token)){
+      this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/profile']);
+    }
+  }
+
+  isTokenExpired(token: string | null): boolean {
+    if(token == null) return true;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const exp = payload.exp;
+    const now = Math.floor(Date.now() / 1000);
+    return exp < now;
   }
 }
