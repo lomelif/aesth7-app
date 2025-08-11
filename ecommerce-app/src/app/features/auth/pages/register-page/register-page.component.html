@@ -16,6 +16,9 @@
             placeholder="Nombre" 
             class="w-full border border-gray-300 p-4 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
+          <div *ngIf="registerForm.get('nombre')?.touched && registerForm.get('nombre')?.invalid" class="text-gray-600 text-sm mt-1">
+            El nombre es obligatorio.
+          </div>
         </div>
 
         <div>
@@ -25,6 +28,9 @@
             placeholder="Apellido" 
             class="w-full border border-gray-300 p-4 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
+          <div *ngIf="registerForm.get('apellido')?.touched && registerForm.get('apellido')?.invalid" class="text-gray-600 text-sm mt-1">
+            El apellido es obligatorio.
+          </div>
         </div>
 
         <div>
@@ -34,6 +40,9 @@
             placeholder="Correo electrónico" 
             class="w-full border border-gray-300 p-4 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
+          <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-gray-600 text-sm mt-1">
+            El email es obligatorio.
+          </div>
         </div>
 
         <div>
@@ -43,12 +52,23 @@
             placeholder="Clave" 
             class="w-full border border-gray-300 p-4 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           />
+          <div *ngIf="registerForm.get('clave')?.touched && registerForm.get('clave')?.errors" class="text-gray-600 text-sm mt-1">
+            <div *ngIf="registerForm.get('clave')?.errors?.['required']">La clave es obligatoria.</div>
+            <div *ngIf="registerForm.get('clave')?.errors?.['minlength']">Debe tener al menos 8 caracteres.</div>
+            <div *ngIf="registerForm.get('clave')?.errors?.['passwordStrength']">
+              La clave debe tener:
+              <ul class="list-disc ml-5">
+                <li *ngIf="!registerForm.get('clave')?.errors?.['passwordStrength'].hasUpperCase">una letra mayúscula</li>
+                <li *ngIf="!registerForm.get('clave')?.errors?.['passwordStrength'].hasNumber">un número</li>
+                <li *ngIf="!registerForm.get('clave')?.errors?.['passwordStrength'].hasSpecialChar">un carácter especial</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <button 
           type="submit" 
           class="cursor-pointer w-full bg-primary text-white p-4 rounded-md font-semibold hover:bg-alternative transition-all"
-          [disabled]="registerForm.invalid"
         >
           Crear mi cuenta
         </button>

@@ -65,11 +65,11 @@ export class CatalogComponent implements OnInit {
 
     this.productsService.getCatalogProducts(page, this.paginationInfo.pageSize, this.sortBy, this.activeFilters).subscribe({
       next: (response) => {
-        this.products = [...response.content];
+        this.products = [...response.items];
         this.paginationInfo = {
           totalPages: response.totalPages,
-          totalElements: response.totalElements,
-          currentPage: response.number,
+          totalElements: response.totalItems,
+          currentPage: response.page,
           first: response.first,
           last: response.last,
           pageSize: response.size

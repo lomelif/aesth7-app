@@ -8,9 +8,10 @@ import { ProductQuantitySelectorComponent } from "./components/product-quantity-
 import { ProductSizeSelectorComponent } from "./components/product-size-selector/product-size-selector.component";
 import { Product, Size } from '../../../../models/product.interface';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductsService } from '../../../../services/products.service';
-import { CartService } from '../../../../services/cart.service';
+import { CartItem, CartService } from '../../../../services/cart.service';
+import { CheckoutService } from '../../../../services/checkout.service';
 
 @Component({
   selector: "app-product-page",
@@ -25,9 +26,11 @@ export class ProductPageComponent implements OnInit {
   selectedImage: string
   quantity = 1
   isLoading = true;
+
+  cartItems: CartItem[] = []
   
 
-  constructor(private route: ActivatedRoute, private productsService: ProductsService, private cartService: CartService) {
+  constructor(private route: ActivatedRoute, private productsService: ProductsService, private cartService: CartService, private checkoutService: CheckoutService, private router: Router) {
     this.product = {
       id: "1",
       name: "DreaM+",
@@ -77,6 +80,12 @@ export class ProductPageComponent implements OnInit {
       },
       )
     });
+
+    this.cartItems = this.cartService.getCartItems()
+
+    this.cartService.cartItems$.subscribe((items) => {
+      this.cartItems = items
+    })
   }
 
   selectImage(image: string): void {
@@ -105,19 +114,46 @@ export class ProductPageComponent implements OnInit {
     const item = {
       id: Number(this.product.id),
       name: this.product.name,
+      size: selectedSize,
       price: this.product.price,
       quantity: this.quantity,
-      imageUrl: this.product.images[0]
+      image: this.product.images[0]
     };
 
     this.cartService.addToCart(item);
   }
 
   buyNow(): void {
-    this.addToCart()
-    console.log("Redirigiendo a checkout...")
+    this.addToCart();
+
+    const token = localStorage.getItem('token');
+    if(this.isTokenExpired(token)){
+      this.router.navigate(['/login']);
+    } else {
+      this.checkout();
+    }
   }
 
+  isTokenExpired(token: string | null): boolean {
+    if(token == null) return true;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const exp = payload.exp;
+    const now = Math.floor(Date.now() / 1000);
+    return exp < now;
+  }
+
+  checkout(): void {
+    if (this.cartItems.length === 0) {
+      return
+    }
+
+    const itemsCheckout = this.cartItems.map(item => ({
+      ...item,
+      price: item.price * 100
+    }));
+
+    this.checkoutService.redirectToCheckout(itemsCheckout);
+  }
   
 }
 

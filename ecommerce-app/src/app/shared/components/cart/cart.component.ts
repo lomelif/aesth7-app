@@ -4,6 +4,9 @@ import { FormsModule } from "@angular/forms"
 import { trigger, transition, style, animate } from "@angular/animations"
 import { CartItem } from "../../../models/cart.interface"
 import { CartService } from "../../../services/cart.service"
+import { loadStripe } from '@stripe/stripe-js';
+import { HttpClient } from '@angular/common/http';
+import { CheckoutService } from "../../../services/checkout.service"
 
 @Component({
   selector: "app-cart",
@@ -27,17 +30,13 @@ export class CartComponent implements OnInit {
   cartItems: CartItem[] = []
   orderNote = ""
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private checkoutService: CheckoutService) {}
 
   ngOnInit(): void {
-    // Obtener los elementos del carrito del servicio
     this.cartItems = this.cartService.getCartItems()
-    console.log("Cart component initialized with items:", this.cartItems)
 
-    // Suscribirse a los cambios en el carrito
     this.cartService.cartItems$.subscribe((items) => {
       this.cartItems = items
-      console.log("Cart items updated:", this.cartItems)
     })
   }
 
@@ -55,6 +54,19 @@ export class CartComponent implements OnInit {
 
   removeItem(itemId: number): void {
     this.cartService.removeItem(itemId)
+  }
+
+  checkout(): void {
+    if (this.cartItems.length === 0) {
+      return
+    }
+
+    const itemsCheckout = this.cartItems.map(item => ({
+      ...item,
+      price: item.price * 100
+    }));
+
+    this.checkoutService.redirectToCheckout(itemsCheckout);
   }
 }
 

@@ -8,6 +8,7 @@ import { LoginPageComponent } from './features/auth/pages/login-page/login-page.
 import { RegisterPageComponent } from './features/auth/pages/register-page/register-page.component';
 import { NewArrivalsPageComponent } from './features/products/pages/new-arrivals-page/new-arrivals-page.component';
 import { BestSellersPageComponent } from './features/products/pages/best-sellers-page/best-sellers-page.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     { path: '', component: HomePageComponent },
@@ -17,6 +18,11 @@ export const routes: Routes = [
     { path: 'long-sleeves', component: LongSleeveCatalogPageComponent },
     { path: 'best-sellers', component: BestSellersPageComponent },
     { path: 'new-arrivals', component: NewArrivalsPageComponent },
+    {
+        path: 'profile',
+        canActivate: [authGuard],
+        loadComponent: () => import('./features/user/pages/profile-page/profile-page.component').then(m => m.ProfilePageComponent)
+    },
     { path: 'login', component: LoginPageComponent },
     { path: 'register', component: RegisterPageComponent },
     { path: '**', redirectTo: '' }

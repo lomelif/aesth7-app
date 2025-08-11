@@ -15,15 +15,15 @@ export class ProductsService {
   latestProductsUrl = `${environment.apiUrl}/products/latest`;
 
   getBestSellers(): Observable<any[]> {
-    return this.http.get<ShowProduct[]>(`${environment.apiUrl}/products/home/trending`);
+    return this.http.get<ShowProduct[]>(`${environment.apiUrl}/api/Product/Trending`);
   }
 
   getNewArrivals(): Observable<any[]> {
-    return this.http.get<ShowProduct[]>(`${environment.apiUrl}/products/home/latest`);
+    return this.http.get<ShowProduct[]>(`${environment.apiUrl}/api/Product/Latest`);
   }
 
   getAllProducts(): Observable<any[]> {
-    return this.http.get<ShowProduct[]>(`${environment.apiUrl}/products`);
+    return this.http.get<ShowProduct[]>(`${environment.apiUrl}/api/Product`);
   }
 
   getCatalogProducts(
@@ -49,12 +49,11 @@ export class ProductsService {
       params = params.set('type', filters.type);
     }
   
-    console.log('📤 Enviando filtros:', filters);
-    return this.http.get<PaginatedResponse<CatalogProduct>>(`${environment.apiUrl}/products/catalog`, { params });
+    return this.http.get<PaginatedResponse<CatalogProduct>>(`${environment.apiUrl}/api/Product/Catalog`, { params });
   }
 
   getProductById(id:string): Observable<Product> {
-    return this.http.get<Product>(`${environment.apiUrl}/products/${id}`);
+    return this.http.get<Product>(`${environment.apiUrl}/api/Product/${id}`);
   }
   
 }
