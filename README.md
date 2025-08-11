@@ -8,7 +8,7 @@
 
 <p align="center">
   <img src="https://res.cloudinary.com/duhwn48mc/image/upload/v1754939040/AESTH777_hckfkc.png" alt="AESTH7 Banner" width="300"/><br/><br/>
-  🌐 <a href="https://aesth7.com" target="_blank" rel="noopener noreferrer"><b>Visitar sitio web</b></a>
+  🌐 <a href="https://aesth7.com" target="_blank" rel="noopener noreferrer"><b>Visit Website</b></a>
 </p>
 
 ---
