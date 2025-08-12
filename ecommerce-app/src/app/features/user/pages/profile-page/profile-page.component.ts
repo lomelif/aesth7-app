@@ -57,13 +57,30 @@ export class ProfilePageComponent {
       }
     });
 
-    this.userService.getOrders().subscribe((orders) => {
-      this.orders = orders
-    })
-
     this.userService.getAddresses().subscribe((addresses) => {
       this.addresses = addresses
     })
+
+    const email = localStorage.getItem('email');
+    if (email) {
+      this.userService.fetchOrdersByEmail(email).subscribe({
+        next: orders => {
+          this.orders = orders;
+          this.orders = orders.map(order => {
+            const totalPrice = order.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+            const totalItems = order.items.reduce((acc, item) => acc + item.quantity, 0);
+            return { ...order, total: totalPrice/100, totalItems: totalItems };
+          });
+          this.cdr.markForCheck();
+        },
+        error: (err) => {
+          if (err.status === 404) {
+            this.orders = [];
+          }
+        }
+      });
+    }
+    
   }
 
   setActiveTab(tab: string): void {

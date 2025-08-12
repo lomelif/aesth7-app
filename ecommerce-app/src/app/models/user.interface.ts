@@ -10,15 +10,17 @@ export interface User {
   export interface Product {
     name: string
     image: string
+    price: number
+    quantity: number
   }
   
   export interface Order {
     id: string
     date: string
     status: "Entregado" | "En tránsito" | "Procesando"
-    total: string
-    items: number
-    products: Product[]
+    total: number
+    totalItems: number
+    items: Product[]
   }
   
   export interface Address {
