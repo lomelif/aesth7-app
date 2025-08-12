@@ -45,6 +45,7 @@ export class RegisterPageComponent implements OnInit{
         next: (response) => {
           localStorage.setItem('token', response.token);
           localStorage.setItem('userId', response.userId.toString());
+          localStorage.setItem('email', response.email.toString());
           Toastify({
             text: "✅ Registro exitoso",
             duration: 3000,

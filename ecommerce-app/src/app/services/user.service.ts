@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core"
-import { BehaviorSubject, type Observable } from "rxjs"
+import { BehaviorSubject, catchError, of, tap, type Observable } from "rxjs"
 import { User, Order, Address } from './../models/user.interface';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 
 
@@ -9,54 +9,8 @@ import { environment } from "../../environments/environment";
   providedIn: "root",
 })
 export class UserService {
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-  // private ordersSubject = new BehaviorSubject<Order[]>([
-  //   {
-  //     id: "#ORD-001",
-  //     date: "15 Dic 2024",
-  //     status: "Entregado",
-  //     total: "$89.99",
-  //     items: 3,
-  //     products: [
-  //       { name: "Camiseta Básica", image: "/placeholder.svg?height=60&width=60" },
-  //       { name: "Jeans Slim Fit", image: "/placeholder.svg?height=60&width=60" },
-  //       { name: "Zapatillas Deportivas", image: "/placeholder.svg?height=60&width=60" },
-  //     ],
-  //   },
-  //   {
-  //     id: "#ORD-002",
-  //     date: "8 Dic 2024",
-  //     status: "En tránsito",
-  //     total: "$156.50",
-  //     items: 2,
-  //     products: [
-  //       { name: "Chaqueta de Invierno", image: "/placeholder.svg?height=60&width=60" },
-  //       { name: "Bufanda de Lana", image: "/placeholder.svg?height=60&width=60" },
-  //     ],
-  //   },
-  //   {
-  //     id: "#ORD-003",
-  //     date: "1 Dic 2024",
-  //     status: "Procesando",
-  //     total: "$45.00",
-  //     items: 1,
-  //     products: [{ name: "Gorra Deportiva", image: "/placeholder.svg?height=60&width=60" }],
-  //   },
-  //   {
-  //     id: "#ORD-004",
-  //     date: "25 Nov 2024",
-  //     status: "Entregado",
-  //     total: "$234.99",
-  //     items: 4,
-  //     products: [
-  //       { name: "Vestido Elegante", image: "/placeholder.svg?height=60&width=60" },
-  //       { name: "Tacones Negros", image: "/placeholder.svg?height=60&width=60" },
-  //       { name: "Bolso de Mano", image: "/placeholder.svg?height=60&width=60" },
-  //       { name: "Collar de Perlas", image: "/placeholder.svg?height=60&width=60" },
-  //     ],
-  //   },
-  // ])
   private ordersSubject = new BehaviorSubject<Order[]>([])
 
   private addressesSubject = new BehaviorSubject<Address[]>([
@@ -96,6 +50,25 @@ export class UserService {
 
   getAddresses(): Observable<Address[]> {
     return this.addressesSubject.asObservable()
+  }
+
+  fetchOrdersByEmail(email: string): Observable<Order[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    const params = new HttpParams().set('email', email);
+
+    return this.http.get<Order[]>(`${environment.apiUrl}/api/Order/ByEmail`, { headers, params })
+      .pipe(
+        tap(orders => this.ordersSubject.next(orders)),
+        catchError(err => {
+          if (err.status === 404) {
+            this.ordersSubject.next([]);
+            return of([]);
+          }
+          return of([]);
+        })
+      );
   }
 
 //   updateUser(user: User): void {

@@ -34,6 +34,7 @@ export class LoginPageComponent {
         next: (response) => {
           localStorage.setItem('token', response.token);
           localStorage.setItem('userId', response.userId.toString());
+          localStorage.setItem('email', response.email.toString());
 
           Toastify({
             text: "✅ Inicio de sesión exitoso",
